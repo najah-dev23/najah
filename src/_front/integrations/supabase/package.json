@@ -1,0 +1,6 @@
+{
+    "name": "@weweb/front-integration-supabase",
+    "dependencies": {
+        "@supabase/supabase-js": "2.99.3"
+    }
+}

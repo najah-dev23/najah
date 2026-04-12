@@ -16,7 +16,7 @@ export default {
     \================================================================================================*/
     async _onLoad(settings) {
         const config = getCurrentSupabaseSettings('supabaseAuth');
-        
+
         /* wwFront:start */
         await this.load(config.projectUrl, config.publicApiKey);
         /* wwFront:end */
@@ -80,11 +80,10 @@ export default {
             const user_metadata = Array.isArray(metadata)
                 ? metadata.reduce((obj, item) => ({ ...obj, [item.key]: item.value }), {})
                 : metadata;
-            const websiteId = wwLib.wwWebsiteData.getInfo().id;
             const emailRedirectTo =
                 redirectPage &&
                 (wwLib.manager
-                    ? `${window.location.origin}/${websiteId}/${redirectPage}`
+                    ? `${window.location.origin}/${redirectPage}`
                     : `${window.location.origin}${wwLib.wwPageHelper.getPagePath(redirectPage)}`);
 
             const { data, error } = await this.publicInstance.auth.signUp(
@@ -153,9 +152,8 @@ export default {
     async signInMagicLink({ email, redirectPage, captchaToken }) {
         if (!this.publicInstance) throw new Error('Invalid Supabase Auth configuration.');
         if (!email) throw new Error('Email is required.');
-        const websiteId = wwLib.wwWebsiteData.getInfo().id;
         const emailRedirectTo = wwLib.manager
-            ? `${window.location.origin}/${websiteId}/${redirectPage}`
+            ? `${window.location.origin}/${redirectPage}`
             : `${window.location.origin}${wwLib.wwPageHelper.getPagePath(redirectPage)}`;
 
         const { data, error } = await this.publicInstance.auth.signInWithOtp({
@@ -186,9 +184,8 @@ export default {
     async signInProvider({ provider, redirectPage, queryParams, scopes, skipBrowserRedirect }) {
         if (!this.publicInstance) throw new Error('Invalid Supabase Auth configuration.');
         if (!provider) throw new Error('Provider is required.');
-        const websiteId = wwLib.wwWebsiteData.getInfo().id;
         const redirectTo = wwLib.manager
-            ? `${window.location.origin}/${websiteId}/${redirectPage}`
+            ? `${window.location.origin}/${redirectPage}`
             : `${window.location.origin}${wwLib.wwPageHelper.getPagePath(redirectPage)}`;
         try {
             const { data, error } = await this.publicInstance.auth.signInWithOAuth({
@@ -256,9 +253,8 @@ export default {
         const isPhone = ['sms', 'phone_change'].includes(type);
         if (isEmail && !email) throw new Error('Email is required.');
         else if (isPhone && !phone) throw new Error('Phone is required.');
-        const websiteId = wwLib.wwWebsiteData.getInfo().id;
         const redirectTo = wwLib.manager
-            ? `${window.location.origin}/${websiteId}/${redirectPage}`
+            ? `${window.location.origin}/${redirectPage}`
             : `${window.location.origin}${wwLib.wwPageHelper.getPagePath(redirectPage)}`;
         const { data, error } = await this.publicInstance.auth.resend({
             type,
@@ -330,11 +326,11 @@ export default {
         if (!this.publicInstance) throw new Error('Invalid Supabase Auth configuration.');
         const roles = this.settings.publicData.userRoleTable
             ? (
-                await this.publicInstance
-                    .from(this.settings.publicData.userRoleTable)
-                    .select(`role:${this.settings.publicData.userRoleTableRoleColumn || 'roleId'}(*)`)
-                    .eq(this.settings.publicData.userRoleTableUserColumn || 'userId', userId)
-            ).data.map(({ role }) => role)
+                  await this.publicInstance
+                      .from(this.settings.publicData.userRoleTable)
+                      .select(`role:${this.settings.publicData.userRoleTableRoleColumn || 'roleId'}(*)`)
+                      .eq(this.settings.publicData.userRoleTableUserColumn || 'userId', userId)
+              ).data.map(({ role }) => role)
             : [];
         return roles;
     },
@@ -367,9 +363,8 @@ export default {
     },
     async resetPasswordForEmail({ email, redirectPage }) {
         if (!this.publicInstance) throw new Error('Invalid Supabase Auth configuration.');
-        const websiteId = wwLib.wwWebsiteData.getInfo().id;
         const redirectTo = wwLib.manager
-            ? `${window.location.origin}/${websiteId}/${redirectPage}`
+            ? `${window.location.origin}/${redirectPage}`
             : `${window.location.origin}${wwLib.wwPageHelper.getPagePath(redirectPage)}`;
         const { error } = await this.publicInstance.auth.resetPasswordForEmail(email, { redirectTo });
         if (error) throw new Error(error.message, { cause: error });
@@ -448,11 +443,11 @@ const adminFunctions = {
         if (!this.privateInstance) throw new Error('Invalid Supabase Auth configuration.');
         const roles = this.settings.publicData.userRoleTable
             ? (
-                await this.privateInstance
-                    .from(this.settings.publicData.userRoleTable)
-                    .select(`role:${this.settings.publicData.userRoleTableRoleColumn || 'roleId'}(*)`)
-                    .eq(this.settings.publicData.userRoleTableUserColumn || 'userId', userId)
-            ).data.map(({ role }) => role)
+                  await this.privateInstance
+                      .from(this.settings.publicData.userRoleTable)
+                      .select(`role:${this.settings.publicData.userRoleTableRoleColumn || 'roleId'}(*)`)
+                      .eq(this.settings.publicData.userRoleTableUserColumn || 'userId', userId)
+              ).data.map(({ role }) => role)
             : [];
         return roles;
     },

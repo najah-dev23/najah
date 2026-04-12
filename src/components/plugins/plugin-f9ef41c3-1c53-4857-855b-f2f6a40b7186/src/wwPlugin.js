@@ -24,7 +24,7 @@ export default {
         Plugin API
     \================================================================================================*/
     async _onLoad(settings) {
-        
+
         // Get configuration for current environment
         let config = getCurrentSupabaseSettings('supabase');
         let runtimeProjectUrl = resolveRuntimeProjectUrl(config);
@@ -33,7 +33,7 @@ export default {
         await this.load(runtimeProjectUrl, config.publicApiKey);
         this.subscribeTables(settings.publicData.realtimeTables || {});
     },
-    
+
     async fetchProjectInfo(configOverride = null) {
         const config = configOverride || getCurrentSupabaseSettings('supabase');
         const projectUrl = config?.projectUrl;
@@ -57,11 +57,11 @@ export default {
     },
     async onSave(settings) {
         await this.syncSettings(settings);
-        
+
         // Get config for current environment
         const config = getCurrentSupabaseSettings('supabase');
         if (!config.projectUrl) return;
-        
+
         const runtimeProjectUrl = resolveRuntimeProjectUrl(config);
 
         if (config.accessToken && config.projectUrl) {
@@ -73,11 +73,7 @@ export default {
             // supabaseAuth will call syncInstance
             const authConfig = getCurrentSupabaseSettings('supabaseAuth');
             const authRuntimeUrl = resolveRuntimeProjectUrl(authConfig);
-            await wwLib.wwPlugins.supabaseAuth.load(
-                authRuntimeUrl,
-                authConfig.publicApiKey,
-                authConfig.privateApiKey
-            );
+            await wwLib.wwPlugins.supabaseAuth.load(authRuntimeUrl, authConfig.publicApiKey, authConfig.privateApiKey);
         } else {
             await this.load(runtimeProjectUrl, config.publicApiKey);
             this.subscribeTables(settings.publicData.realtimeTables || {});
@@ -144,7 +140,7 @@ export default {
                         await this.load(runtimeProjectUrl, config.publicApiKey);
                     }
                 }
-                
+
                 const fields =
                     collection.config.fieldsMode === 'guided'
                         ? (collection.config.dataFields || []).join(', ')
@@ -161,7 +157,9 @@ export default {
                 }
 
                 for (const sort of collection.sort) {
-                    query.order(sort.key, { ascending: sort.direction === 'ASC' });
+                    const sortColumn = Array.isArray(sort.field) ? sort.field[0] : sort.field || sort.key;
+                    if (!sortColumn) continue;
+                    query.order(sortColumn, { ascending: sort.direction === 'ASC' });
                 }
 
                 const { data, error, count } = await query;
@@ -692,10 +690,10 @@ const applyModifiers = (query, { select, order, limit, range, single, maybeSingl
             select.mode === 'minimal'
                 ? ''
                 : select.mode === 'guided'
-                ? select?.fields.length
-                    ? select.fields.join(', ')
-                    : '*'
-                : select?.fieldsAdvanced
+                  ? select?.fields.length
+                      ? select.fields.join(', ')
+                      : '*'
+                  : select?.fieldsAdvanced
         );
     }
 
