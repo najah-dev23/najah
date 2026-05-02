@@ -26,7 +26,8 @@ export async function initializeIntegrationInstances() {
     await integrationsStore.initializeInstances();
 }
 
-export async function initializeData(toRoute, forceReset = false) {
+ export async function initializeData(toRoute, forceReset = false) {
+ 
     const variablesStore = useVariablesStore(wwLib.$pinia);
     const backTableViewsStore = useBackTableViewsStore(wwLib.$pinia);
     const backAuthStore = useBackAuthStore(wwLib.$pinia);
@@ -38,7 +39,6 @@ export async function initializeData(toRoute, forceReset = false) {
     /*=================================/
     / RESET & INIT                     /
     /=================================*/
-    await backAuthStore.refresh();
     backTableViewsStore.resetData(resetPersistant);
     resetCollections(resetPersistant);
     resetWorkflows();
@@ -46,6 +46,7 @@ export async function initializeData(toRoute, forceReset = false) {
     if (forceReset) {
         wwLib.$emit('reset-library-variables');
     }
+    await backAuthStore.refresh();
 
     /*=================================/
     / ONLOAD BEFORE FETCH              /
@@ -76,7 +77,8 @@ export async function initializeData(toRoute, forceReset = false) {
     wwLib.getFrontWindow().removeEventListener('beforeunload', beforeUnload);
     wwLib.getFrontWindow().addEventListener('beforeunload', beforeUnload);
     /* wwFront:end */
-}
+
+ }
 
 export async function onPageUnload() {
     await executeWorkflows('page-unload');
