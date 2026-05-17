@@ -1,14 +1,19 @@
 <template>
      <!-- wwFront:start -->
     <router-view />
+    <SpeedInsights />
     <!-- wwFront:end -->
 </template>
 
 <script>
 import { reactive, computed, provide, onMounted, watch } from 'vue';
+import { SpeedInsights } from '@vercel/speed-insights/vue';
 
  
 export default {
+    components: {
+        SpeedInsights,
+    },
     setup() {
         const wwFrontState = reactive({
             lang: computed(() => wwLib.$store.getters['front/getLang']),
