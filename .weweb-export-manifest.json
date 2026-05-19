@@ -143,7 +143,7 @@
     "public/manifest.json": "12372b1a3268ac224d87f06ad19e251c9cc3001f",
     "public/robots.txt": "aaa6978f3d606bd8a330493a9a927e6f4aa1311a",
     "public/serviceworker.js": "d5e2dc638350f9657d002d8f90038dcdeaac95b1",
-    "public/sitemap.xml": "de94ad7880ae6b999d23a5f229756b4c18a698ef",
+    "public/sitemap.xml": "f7cdc553e6330371a229973b888e14ffc870adc6",
     "src/_common/helpers/code/backendWorkflows.js": "74cae774c26bb9a3e58ad47ef1e21684bc4e652d",
     "src/_common/helpers/code/backendWorkflows.test.js": "7ef3676daae86c4f75e58a83529d628d8fb20965",
     "src/_common/helpers/code/connnections.js": "3d66b260182577978dba57cd66a8ece816089e18",
@@ -219,7 +219,7 @@
     "src/_front/integrations/weweb-auth/package.json": "f237cffa9a439570a286398af22db42dfc2baaf7",
     "src/_front/integrations/weweb-auth/weweb-auth.front.js": "d92a524e5e677a59d9ee14887bca72b9dd3fa9da",
     "src/_front/main.js": "aaea85d8985c55ce0533de110100e2a53afa8e79",
-    "src/_front/router.js": "ee9249ad7b3f2df53d237a8c453aeb02113fee63",
+    "src/_front/router.js": "f4b033eb04313c586aad20e189283c600eb0de1f",
     "src/_front/use/useComponentAdvancedInteractions.js": "db8e0f958e779b9386a66487f56ec6893d83790c",
     "src/_front/use/useComponentKeyframes.js": "2e4a87351ff0d5010ed6cb4b7fd8eeba1dabf520",
     "src/_front/use/useComponentStates.js": "2637b9d8476e9c2cfe290103695b6531a52bc0b8",
@@ -593,6 +593,6 @@
     "template.html": "8d9993a4ec6e886aa2139f632616f6c4140bb0b8",
     "tsconfig.app.json": "0b84bc6e6d0d38b6fcd3e56b004b82a2ee269797",
     "tsconfig.node.json": "44d42fe8d79ae3722878356de89c2a7f6d84e867",
-    "vite.config.js": "6ab2034fdfbda861e5cff8be06afbff77f67c7fa"
+    "vite.config.js": "09dd821f91297b9d2527430462d510efdcf65b81"
   }
 }
