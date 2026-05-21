@@ -20,17 +20,6 @@
         "pluginId": "9c40819b-4a8f-468f-9ba5-4b9699f3361f",
         "publicData": {}
     },
-    "fbf0feec-356b-461b-8738-3b1f44edaf02": {
-        "id": "f130f2d6-ba1c-4767-b127-5a95148ed752",
-        "name": "Google GTM",
-        "designId": "53c8f9d9-8637-49b9-b63a-d8ac55a61a0f",
-        "pluginId": "fbf0feec-356b-461b-8738-3b1f44edaf02",
-        "publicData": {
-            "containerIdProd": "GTM-T7QNP4XM",
-            "containerIdEditor": "GTM-T7QNP4XM",
-            "containerIdStaging": "GTM-T7QNP4XM"
-        }
-    },
     "f9ef41c3-1c53-4857-855b-f2f6a40b7186": {
         "id": "6dccde32-2209-406d-9b95-2e76f569fc04",
         "name": "Supabase",
