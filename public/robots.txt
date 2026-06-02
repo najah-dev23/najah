@@ -1,3 +1,3 @@
 User-agent:*
 Disallow:
-Sitemap: https://www.prepary.ma/sitemap.xml
+Sitemap: https://53c8f9d9-8637-49b9-b63a-d8ac55a61a0f.weweb-preview.io/sitemap.xml

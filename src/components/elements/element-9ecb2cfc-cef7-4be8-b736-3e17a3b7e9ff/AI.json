@@ -59,33 +59,7 @@
             "description": "Triggered when form validation fails on submission."
         }
     ],
-    "localContext": [
-        {
-            "path": "form",
-            "type": "object",
-            "description": "The form object containing all form state and data.",
-            "content": {
-                "formData": {
-                    "type": "object",
-                    "description": "An object containing all current form field values. Keys are the field names and values are the current input values.",
-                    "content": {}
-                },
-                "fields": {
-                    "type": "object",
-                    "description": "A record containing all form input names with their values and validation states. Each key is a field name, and the value is an object with 'isValid' (boolean) and 'value' (any) properties.",
-                    "content": {
-                        "fieldName": {
-                            "isValid": "boolean",
-                            "value": "any"
-                        }
-                    }
-                },
-                "isSubmitting": "boolean",
-                "isSubmitted": "boolean",
-                "isValid": "boolean"
-            }
-        }
-    ],
+    "localContext": [],
     "actions": [
         {
             "label": "Set form state",
@@ -129,16 +103,10 @@
     "variables": [
         {
             "name": "form",
-            "description": "Object containing the full form state including fields (with their values and validity), isSubmitting, isSubmitted, and isValid flags. Accessed via variables['formId-form'].",
+            "description": "Object containing the full form state including isSubmitting, isSubmitted, and isValid flags. Accessed via variables['formId-form'].",
             "type": "object",
             "readonly": true,
             "content": {
-                "fields": {
-                    "fieldName": {
-                        "isValid": "boolean",
-                        "value": "any"
-                    }
-                },
                 "isSubmitting": "boolean",
                 "isSubmitted": "boolean",
                 "isValid": "boolean"
