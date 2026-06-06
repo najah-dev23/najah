@@ -70,7 +70,7 @@ export default {
         uid: { type: String, required: true },
         wwFrontState: { type: Object, required: true },
     },
-    emits: ['update:content', 'update:sidepanel-content'],
+    emits: ['update:content', 'update:sidepanel-content', 'trigger-event'],
     setup(props, { emit }) {
 
         const swiper = ref(null);
@@ -173,6 +173,7 @@ export default {
                 on: {
                     realIndexChange: e => {
                         sliderIndex.value = e.realIndex;
+                        emit('trigger-event', { name: 'slideChange', event: { slideIndex: e.realIndex } });
                     },
                 },
             };
@@ -292,7 +293,14 @@ export default {
             if (swiperInstance.value) swiperInstance.value.destroy(true, true);
         });
 
-        // Create component variables for external binding (accessible in WeWeb editor)
+        const sliderIndexVariable = wwLib.wwVariable.useComponentVariable({
+            uid: props.uid,
+            name: 'sliderIndex',
+            defaultValue: sliderIndex,
+            type: 'number',
+            readonly: true
+        });
+
         const slideImageStatesVariable = wwLib.wwVariable.useComponentVariable({
             uid: props.uid,
             name: 'slideImageStates',
@@ -303,13 +311,16 @@ export default {
 
         const allImagesLoadedVariable = wwLib.wwVariable.useComponentVariable({
             uid: props.uid,
-            name: 'allImagesLoaded', 
+            name: 'allImagesLoaded',
             defaultValue: allImagesLoaded,
             type: 'boolean',
             readonly: true
         });
 
-        // Watch and update component variables when states change
+        watch(sliderIndex, (newValue) => {
+            sliderIndexVariable.setValue(newValue);
+        });
+
         watch(slideImageStatesWithAggregates, (newValue) => {
             slideImageStatesVariable.setValue(newValue);
         });
@@ -376,6 +387,7 @@ export default {
             numberOfBullets,
             cssVariables,
             onBulletClick,
+            slideTo,
             slideNext,
             slidePrev,
             swiperInstance,

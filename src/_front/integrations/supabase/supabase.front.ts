@@ -256,7 +256,8 @@ export default {
             if (!instance) throw new Error('Supabase instance is required');
 
             const selectColumns = (args.returnColumns || []).join(',') || '*';
-            const { data, error } = await instance.from(args.table).insert(args.data).select(selectColumns);
+            const builder = instance.from(args.table).insert(args.data);
+            const { data, error } = await (args.returnMode === 'none' ? builder : builder.select(selectColumns));
 
             if (error) throw error;
             return data;
@@ -267,7 +268,7 @@ export default {
             const selectColumns = (args.returnColumns || []).join(',') || '*';
             let query = instance.from(args.table).update(args.data);
             query = applyDataFilter(query, args.filters);
-            const { data, error, count } = await query.select(selectColumns);
+            const { data, error, count } = await (args.returnMode === 'none' ? query : query.select(selectColumns));
 
             if (error) throw error;
             return args.count ? { data, count } : data;
@@ -276,13 +277,11 @@ export default {
             if (!instance) throw new Error('Supabase instance is required');
 
             const selectColumns = (args.returnColumns || []).join(',') || '*';
-            const { data, error } = await instance
-                .from(args.table)
-                .upsert(args.data, {
-                    onConflict: args.onConflict?.join(','),
-                    ignoreDuplicates: args.ignoreDuplicates,
-                })
-                .select(selectColumns);
+            const builder = instance.from(args.table).upsert(args.data, {
+                onConflict: args.onConflict?.join(','),
+                ignoreDuplicates: args.ignoreDuplicates,
+            });
+            const { data, error } = await (args.returnMode === 'none' ? builder : builder.select(selectColumns));
 
             if (error) throw error;
             return data;
@@ -293,7 +292,7 @@ export default {
             const selectColumns = (args.returnColumns || []).join(',') || '*';
             let query = instance.from(args.table).delete();
             query = applyDataFilter(query, args.filters);
-            const { data, error } = await query.select(selectColumns);
+            const { data, error } = await (args.returnMode === 'none' ? query : query.select(selectColumns));
 
             if (error) throw error;
             return data;
