@@ -23,6 +23,8 @@ app.component('wwobject-deb10a01-5eef-4aa1-9017-1b51c2ad6fd0', element_deb10a01_
 
 // eslint-disable-next-line no-undef
 import section_99586bd3_2b15_4d6b_a025_6a50d07ca845 from '@/components/sections/section-99586bd3-2b15-4d6b-a025-6a50d07ca845/src/wwSection.vue';
+import section_ef0ecc71_9a59_4eab_94b0_b36d66d3d61d from '@/components/sections/section-ef0ecc71-9a59-4eab-94b0-b36d66d3d61d/src/wwSection.vue';
 
 // eslint-disable-next-line no-undef
 app.component('section-99586bd3-2b15-4d6b-a025-6a50d07ca845', section_99586bd3_2b15_4d6b_a025_6a50d07ca845);
+app.component('section-ef0ecc71-9a59-4eab-94b0-b36d66d3d61d', section_ef0ecc71_9a59_4eab_94b0_b36d66d3d61d);
