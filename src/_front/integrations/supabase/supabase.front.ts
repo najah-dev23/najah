@@ -1,40 +1,12 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { getValue } from '@/_common/helpers/code/customCode.js';
 import { useBackAuthStore } from '@/pinia/backAuth.js';
+import { buildSelectString } from './supabase.select';
 
 function formatSession(session) {
     const _session = { ...session };
     delete _session.user;
     return _session;
-}
-
-function buildSelectString(columns: any, joinTypes: any = {}): string {
-    if (!columns || columns === '*') return '*';
-    if (Array.isArray(columns)) return columns.join(', ') || '*';
-
-    const rootCols: string[] = [];
-    const joinFragments: string[] = [];
-
-    for (const [key, val] of Object.entries(columns)) {
-        if (key === '*') { rootCols.push('*'); continue; }
-
-        if (val === true) {
-            rootCols.push(key);
-        } else if (typeof val === 'object' && val !== null) {
-            const nestedVal = (val as any).$value || val;
-            let colStr = '*';
-            if (nestedVal && typeof nestedVal === 'object') {
-                const nestedCols = Object.keys(nestedVal).filter(k => k !== '$alias' && k !== '$value');
-                colStr = nestedCols.length ? nestedCols.join(', ') : '*';
-            }
-
-            const tableName = key.includes('__') ? key.split('__')[0] : key;
-            const hint = joinTypes[key] === 'inner' ? '!inner' : '';
-            joinFragments.push(`${tableName}${hint}(${colStr})`);
-        }
-    }
-
-    return [...rootCols, ...joinFragments].join(', ') || '*';
 }
 
 function applyFilters(query, filters) {
